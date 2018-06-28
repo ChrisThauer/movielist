@@ -14,6 +14,9 @@ const navbar = (props) => (
             <li className="nav-item">
               <NavLink className="nav-link" to="/movielist">Your List</NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/movielist/new">Add a Movie</NavLink>
+            </li>
           </ul>
         </div>
       </nav>
