@@ -1,27 +1,36 @@
 import React, {Component} from 'react';
+import firebase from '../../firebase';
 
 class MovieList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      movies: [
-        {
-          title: 'Back to the Future',
-          rating: '9'
-        },
-        {
-          title: 'Star Wars',
-          rating: '10'
-        }
-      ]
+      movies: []
     }
+  }
+
+  componentDidMount() {
+    const moviesRef = firebase.database().ref('movies');
+    moviesRef.on('value', snapshot => {
+      let movies = snapshot.val();
+      let newState = [];
+      for (let movie in movies) {
+        newState.push({
+          title: movies[movie].title,
+          score: movies[movie].score
+        });
+      }
+      this.setState({
+        movies: newState
+      })
+    })
   }
 
 
   render() {
     return (
-      <div>
+      <div className="container">
         <table className="table table-hover">
           <thead className="thead-dark">
             <tr>
@@ -33,7 +42,7 @@ class MovieList extends Component {
             {this.state.movies.map(movie => (
               <tr>
                 <td>{movie.title}</td>
-                <td>{movie.rating}</td>
+                <td>{movie.score}</td>
               </tr>
             ))}
           </tbody>
