@@ -11,12 +11,14 @@ class MovieList extends Component {
   }
 
   componentDidMount() {
-    const moviesRef = firebase.database().ref('movies');
+    const userId = this.props.user ? this.props.user.uid : '';
+    const moviesRef = firebase.database().ref(userId);
     moviesRef.on('value', snapshot => {
       let movies = snapshot.val();
       let newState = [];
       for (let movie in movies) {
         newState.push({
+          id: movie,
           title: movies[movie].title,
           score: movies[movie].score
         });
@@ -40,7 +42,7 @@ class MovieList extends Component {
           </thead>
           <tbody>
             {this.state.movies.map(movie => (
-              <tr>
+              <tr key={movie.id}>
                 <td>{movie.title}</td>
                 <td>{movie.score}</td>
               </tr>

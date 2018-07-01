@@ -17,6 +17,13 @@ const navbar = (props) => (
             <li className="nav-item">
               <NavLink className="nav-link" to="/movielist/new">Add a Movie</NavLink>
             </li>
+            <li className="nav-item">
+              {props.user ?
+                <button onClick={props.logout} className="btn btn-secondary">Log Out</button>
+                :
+                <button onClick={props.login} className="btn btn-secondary">Log In</button>
+              }
+            </li>
           </ul>
         </div>
       </nav>
